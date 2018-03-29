@@ -8,71 +8,81 @@
 </head>
 <body>
     
-    <div id="game">
-          <h3>Wins:<span id="wins"> </span></h3> 
-          <h3>Losses:<span id="losses"> </span></h3>
-          <h3>Guesses Left:<span id="guessLeft"> </span></h3>
-          <h3>Your Guesses so far:<span id="guessesMade"> </span></h3>
-      </div>
+        <!-- Now this is a story all about how this is where the game lives on html -->
+
+    </div>
+            <p><h1>The Psychic Game</h1></p>
+            <p><h4>Guess what letter I'm thinking of</h4></p>
+            <p><h4>Wins: 0</h4></p>
+            <p><h4>Losses: 0</h4></p>
+            <p><h4>Guesses Left: 9</h4></p>
+            <p><h4>Your guesses so far: </h4></p>
+        </div>
+   
 
 
 
 <script>
-//the choices that can be made by the computer
-var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-//global variables zeroing in
+// Define letters that computer can pick from (all of them)
+var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+// zero and create global vars
+var wins = 0;
 var losses = 0;
 var guesses = 9;
-var guessedLetters = [];
-var computerGuess = "";
-
-document.getElementById("wins").innerHTML = wins;
-document.getElementById("losses").innerHTML = losses;
-document.getElementById("guessesMade").innerHTML = guesses;
-
-
-
-
-//select random letter
-newLetter = function(){
+// guessesMade is the list of letters guessed that were not true
+var guessesMade = [];
+// userGuess is what the user picks by pressing a key
+var userGuess = null;
+// Have computer pick a letter and store it in computerGuess
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-console.log(computerGuess)
-//
-}
+console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
 
-newLetter()
-
-reset = function() {
-  Guesses = 9;
-  guessedLetters.length=0;
-  newLetter();
-
-}
-
-
-//When key is released it becomes the users guess
+// start listening for events
 document.onkeyup = function(event) {
-  guesses--;
-  var userGuess = event.key
 
-  guessedLetters.push(userGuess);
+	// When user presses a key, it records it and saves to userGuess
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
-        if (userGuess === computerGuess){
-            wins++;
-            document.getElementById("wins").innerHTML = wins;
-            alert("Yes, you are psychic!");
-            reset();
-            }
-        else if(guesses == 0){
-            // Then we will loss and we'll update the html to display the loss 
-            losses++;
-            document.getElementById("losses").innerHTML = losses;
-            alert("Sorry, you're not psychic, maybe try again?");
-            // Then we'll call the reset. 
-            reset();
-        }
-};
+	// Add the user's guess to guessesMade array but 
+	// only if it wasn't already previously picked by the user
+	// also make sure that the character user picks is within
+	// the alphabet, and not any non-usable character
+	if (guessesMade.indexOf(userGuess) < 0 && computerChoices.indexOf(userGuess) >= 0) {
+		guessesMade[guessesMade.length]=userGuess;
+		// if it is a new letter then decrease remaining guesses by 1
+		guesses--;
+	}
+
+	// if computerGuess is same as userGuess then record it as a win
+	// and then reset guesses to 9, and empty the guessesMade array
+	// also have the computer make a new random pick
+	if (computerGuess == userGuess) {
+		wins++;
+		console.log("You won!");
+		guesses = 9;
+		guessesMade = [];
+		computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+		console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
+	}
+
+	// if guesses gets to 0 then record it as a loss
+	// and then reset guesses to 9, and empty the guessesMade array
+	// also have the computer make a new random pick
+	if (guesses == 0) {
+		losses++;
+		console.log("You lost!");
+		guesses = 9;
+		guessesMade = [];
+		computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+		console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
+	}
+
+	// Displaying progress to HTML
+	var html = "<p><h1>The Psychic Game</h1></p>" + "<p><h4>Guess what letter I\'m thinking of</h4></p>" + "<p><h4>Wins: " + wins + "</h4></p>" + "<p><h4>Losses: " + losses + "</h4></p>" + "<p><h4>Guesses Left: " + guesses + "</h4></p>" + "<p><h4>Your guesses so far: " + guessesMade + "</h4></p>";
+	// place html into the game ID
+	document.querySelector("#game").innerHTML = html;
+
+}
 
 </script>
 
