@@ -10,13 +10,13 @@
     
         <!-- Now this is a story all about how this is where the game lives on html -->
 
-    </div>
-            <p><h1>The Psychic Game</h1></p>
-            <p><h4>Guess what letter I'm thinking of</h4></p>
-            <p><h4>Wins: 0</h4></p>
-            <p><h4>Losses: 0</h4></p>
-            <p><h4>Guesses Left: 9</h4></p>
-            <p><h4>Your guesses so far: </h4></p>
+    </div id="game">
+            <h1>The Psychic Game</h1>
+            <h4>Guess what letter I'm thinking of</h4>
+            <h4>Wins: <span id="wins"></span></h4>
+            <h4>Losses: <span id="losses"></span></h4>
+            <h4>Guesses Left: <span id="guesses"></span></h4>
+            <h4>Your guesses so far: <span id="guessesMade"></span></h4>
         </div>
    
 
@@ -36,6 +36,12 @@ var userGuess = null;
 // Have computer pick a letter and store it in computerGuess
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
+// Displaying progress to HTML
+document.getElementById("wins").innerHTML=wins;
+document.getElementById("losses").innerHTML=losses;
+document.getElementById("guesses").innerHTML=guesses;
+document.getElementById("guessesMade").innerHTML=guessesMade.join(", ");
+
 
 // start listening for events
 document.onkeyup = function(event) {
@@ -51,6 +57,11 @@ document.onkeyup = function(event) {
 		guessesMade[guessesMade.length]=userGuess;
 		// if it is a new letter then decrease remaining guesses by 1
 		guesses--;
+		// Displaying progress to HTML
+		document.getElementById("wins").innerHTML=wins;
+		document.getElementById("losses").innerHTML=losses;
+		document.getElementById("guesses").innerHTML=guesses;
+		document.getElementById("guessesMade").innerHTML=guessesMade.join(", ");
 	}
 
 	// if computerGuess is same as userGuess then record it as a win
@@ -63,6 +74,11 @@ document.onkeyup = function(event) {
 		guessesMade = [];
 		computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 		console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
+		// Displaying progress to HTML
+		document.getElementById("wins").innerHTML=wins;
+		document.getElementById("losses").innerHTML=losses;
+		document.getElementById("guesses").innerHTML=guesses;
+		document.getElementById("guessesMade").innerHTML=guessesMade.join(", ");
 	}
 
 	// if guesses gets to 0 then record it as a loss
@@ -75,12 +91,14 @@ document.onkeyup = function(event) {
 		guessesMade = [];
 		computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 		console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guesses + " Guesses so far: " + guessesMade + " Computer picked: " + computerGuess);
+		// Displaying progress to HTML
+		document.getElementById("wins").innerHTML=wins;
+		document.getElementById("losses").innerHTML=losses;
+		document.getElementById("guesses").innerHTML=guesses;
+		document.getElementById("guessesMade").innerHTML=guessesMade.join(", ");
 	}
 
-	// Displaying progress to HTML
-	var html = "<p><h1>The Psychic Game</h1></p>" + "<p><h4>Guess what letter I\'m thinking of</h4></p>" + "<p><h4>Wins: " + wins + "</h4></p>" + "<p><h4>Losses: " + losses + "</h4></p>" + "<p><h4>Guesses Left: " + guesses + "</h4></p>" + "<p><h4>Your guesses so far: " + guessesMade + "</h4></p>";
-	// place html into the game ID
-	document.querySelector("#game").innerHTML = html;
+	
 
 }
 
