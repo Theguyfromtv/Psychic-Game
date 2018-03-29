@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+</head>
+<body>
+    
+    <div id="game">
+          <h3>Wins:<span id="wins"> </span></h3> 
+          <h3>Losses:<span id="losses"> </span></h3>
+          <h3>Guesses Left:<span id="guessLeft"> </span></h3>
+          <h3>Your Guesses so far:<span id="guessesMade"> </span></h3>
+      </div>
+
+
+
+<script>
+//the choices that can be made by the computer
+var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+//global variables zeroing in
+var losses = 0;
+var guesses = 9;
+var guessedLetters = [];
+var computerGuess = "";
+
+document.getElementById("wins").innerHTML = wins;
+document.getElementById("losses").innerHTML = losses;
+document.getElementById("guessesMade").innerHTML = guesses;
+
+
+
+
+//select random letter
+newLetter = function(){
+var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+console.log(computerGuess)
+//
+}
+
+newLetter()
+
+reset = function() {
+  Guesses = 9;
+  guessedLetters.length=0;
+  newLetter();
+
+}
+
+
+//When key is released it becomes the users guess
+document.onkeyup = function(event) {
+  guesses--;
+  var userGuess = event.key
+
+  guessedLetters.push(userGuess);
+
+        if (userGuess === computerGuess){
+            wins++;
+            document.getElementById("wins").innerHTML = wins;
+            alert("Yes, you are psychic!");
+            reset();
+            }
+        else if(guesses == 0){
+            // Then we will loss and we'll update the html to display the loss 
+            losses++;
+            document.getElementById("losses").innerHTML = losses;
+            alert("Sorry, you're not psychic, maybe try again?");
+            // Then we'll call the reset. 
+            reset();
+        }
+};
+
+</script>
+
+</body>
+</html>
